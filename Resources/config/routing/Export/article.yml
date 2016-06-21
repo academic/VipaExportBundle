@@ -1,3 +1,15 @@
 ojs_data_export_article:
-  path:     export/article
+  path:     /
   defaults: { _controller: "OjsExportBundle:ArticleExport:index" }
+
+ojs_data_export_article_json:
+  path:     /json
+  defaults: { _controller: "OjsExportBundle:ArticleExport:json" }
+
+ojs_data_export_article_xml:
+  path:     /xml
+  defaults: { _controller: "OjsExportBundle:ArticleExport:xml" }
+
+ojs_data_export_article_crossref:
+  path:     /crossref
+  defaults: { _controller: "OjsExportBundle:ArticleExport:crossref" }

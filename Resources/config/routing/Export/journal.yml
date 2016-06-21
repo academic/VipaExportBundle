@@ -1,3 +1,15 @@
 ojs_data_export_journal:
-  path:     export/journal
+  path:     /
   defaults: { _controller: "OjsExportBundle:JournalExport:index" }
+
+ojs_data_export_journal_json:
+    path:     /json
+    defaults: { _controller: "OjsExportBundle:JournalExport:json" }
+
+ojs_data_export_journal_xml:
+    path:     /xml
+    defaults: { _controller: "OjsExportBundle:JournalExport:xml" }
+
+ojs_data_export_journal_doaj:
+    path:     /doaj
+    defaults: { _controller: "OjsExportBundle:JournalExport:doaj" }

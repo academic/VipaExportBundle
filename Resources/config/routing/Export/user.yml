@@ -1,3 +1,11 @@
 ojs_data_export_user:
-  path:     export/user
+  path:     /
   defaults: { _controller: "OjsExportBundle:UserExport:index" }
+
+ojs_data_export_user_json:
+  path:     /json
+  defaults: { _controller: "OjsExportBundle:UserExport:json" }
+
+ojs_data_export_user_xml:
+  path:     /xml
+  defaults: { _controller: "OjsExportBundle:UserExport:xml" }

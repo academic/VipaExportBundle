@@ -4,16 +4,16 @@ ojs_data_export:
 
 ojs_data_export_article:
   resource: routing/Export/article.yml
-  prefix:     /journal/{journalId}/
+  prefix:     /journal/{journalId}/export/article
 
 ojs_data_export_issue:
   resource: routing/Export/issue.yml
-  prefix:     /journal/{journalId}/
+  prefix:     /journal/{journalId}/export/issue
 
 ojs_data_export_journal:
   resource: routing/Export/journal.yml
-  prefix:     /journal/{journalId}/
+  prefix:     /journal/{journalId}/export/journal
 
 ojs_data_export_user:
   resource: routing/Export/user.yml
-  prefix:     /journal/{journalId}/
+  prefix:     /journal/{journalId}/export/user
