@@ -1,10 +1,26 @@
 services:
   export.left_menu_listener:
     class: Ojs\ExportBundle\EventListener\LeftMenuListener
-    arguments: ["@security.authorization_checker", "@ojs.journal_service", "@security.token_storage"]
+    arguments:
+      - "@security.authorization_checker"
+      - "@ojs.journal_service"
+      - "@security.token_storage"
     tags:
       - { name: kernel.event_subscriber }
 
   export_grid_action:
     class: Ojs\ExportBundle\Service\ExportGridAction
     arguments: ["@translator"]
+
+  ojs.data_export:
+    class: Ojs\ExportBundle\Service\DataExportService
+    arguments:
+      - "@doctrine.orm.entity_manager"
+      - "%kernel.root_dir%"
+
+  ojs_export.twig.export_extension:
+      class: Ojs\ExportBundle\Service\Twig\ExportTwigExtension
+      arguments:
+          - "@router"
+      tags:
+          - { name: twig.extension }
