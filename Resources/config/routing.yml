@@ -1,24 +1,19 @@
 ojs_data_export:
   path:     /journal/{journalId}/export
   defaults: { _controller: "OjsExportBundle:Export:index" }
-  methods: [GET]
 
 ojs_data_export_article:
-  path:     /journal/{journalId}/export/article
-  defaults: { _controller: "OjsExportBundle:ArticleExport:index" }
-  methods: [GET]
+  resource: routing/Export/article.yml
+  prefix:     /journal/{journalId}/
 
 ojs_data_export_issue:
-  path:     /journal/{journalId}/export/issue
-  defaults: { _controller: "OjsExportBundle:IssueExport:index" }
-  methods: [GET]
+  resource: routing/Export/issue.yml
+  prefix:     /journal/{journalId}/
 
 ojs_data_export_journal:
-  path:     /journal/{journalId}/export/journal
-  defaults: { _controller: "OjsExportBundle:JournalExport:index" }
-  methods: [GET]
+  resource: routing/Export/journal.yml
+  prefix:     /journal/{journalId}/
 
 ojs_data_export_user:
-  path:     /journal/{journalId}/export/user
-  defaults: { _controller: "OjsExportBundle:UserExport:index" }
-  methods: [GET]
+  resource: routing/Export/user.yml
+  prefix:     /journal/{journalId}/
