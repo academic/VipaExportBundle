@@ -1,0 +1,4 @@
+ojs_data_export:
+  path:     /journal/{journalId}/export
+  defaults: { _controller: "OjsExportBundle:Export:index" }
+  methods: [GET]
