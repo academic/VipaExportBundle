@@ -1,0 +1,21 @@
+{% extends '::ojsbase.html.twig' %}
+{% block title %}{{ 'title.export'|trans }} {{ parent() }}{% endblock %}
+
+{% block breadcrumb %}
+    {% set list = [
+    {'link': path('ojs_journal_dashboard_index', {journalId: selectedJournal().id}), 'title': 'dashboard'|trans},
+    {'title': 'title.export'|trans}
+    ] %}
+    {{ breadcrumb(list) }}
+{% endblock %}
+
+{% block body -%}
+    <h2>{{ 'title.export'|trans }}</h2>
+
+    {% include '::flashbag.html.twig' %}
+    {{ include('OjsExportBundle::_tabs_menu.html.twig', {active: 1}) }}
+
+    <hr>
+    <h3>{{ 'export.history'|trans }}</h3>
+    {{ grid(grid) }}
+{% endblock %}

@@ -1,0 +1,7 @@
+title.export: 'Dergiyi Dışa Aktar'
+export.as.json: 'JSON Olarak Aktar'
+export.as.xml: 'XML Olarak Aktar'
+export.as.doaj: 'DOAJ Olarak Aktar'
+export.as.crossref: 'CrossRef Olarak Aktar'
+export.history: 'Dışa Aktarım Tarihçesi'
+ojs.export_download: 'Dışa Aktarım İndir'
