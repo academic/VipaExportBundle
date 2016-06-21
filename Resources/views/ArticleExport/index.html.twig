@@ -11,8 +11,8 @@
 
 {% block body -%}
     <h2>{{ 'title.export'|trans }}</h2>
-
     {% include '::flashbag.html.twig' %}
     {{ include('OjsExportBundle::_tabs_menu.html.twig', {active: 2}) }}
-
+    <hr>
+    {{ grid(grid) }}
 {% endblock %}
