@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<records xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.doaj.org/schemas/doajArticles.xsd">
+    {% for article in articles %}
+        <record>
+            <publisher>{{ article.journal.publisher.name }}</publisher>
+            <journalTitle>{{ article.journal.title }}</journalTitle>
+            <eissn>{{ article.journal.eissn }}</eissn>
+            <publicationDate>{{ article.pubdate|date('Y-m-d') }}</publicationDate>
+            <volume>{{ article.issue.volume }}</volume>
+            <issue>{{ article.issue.id }}</issue>
+            <startPage>{{ article.firstPage }}</startPage>
+            <endPage>{{ article.lastPage }}</endPage>
+            <doi>{{ article.doi }}</doi>
+            <publisherRecordId>{{ article.journal.publisher.id }}</publisherRecordId>
+            <title language="{{ doajLanguageTransform(article.journal.mandatoryLang.code) }}">{{ article.title }}</title>
+            <authors>
+                {% for articleAuthor in article.articleAuthors %}
+                    <author>
+                        <name>{{ articleAuthor.author.fullName }}</name>
+                        <email>{{ articleAuthor.author.email }}</email>
+                        {% if articleAuthor.author.institution is not empty %}
+                            <affiliationId>{{ articleAuthor.author.institution.id }}</affiliationId>
+                        {% endif %}
+                    </author>
+                {% endfor %}
+            </authors>
+            <affiliationsList>
+                {% for articleAuthor in article.articleAuthors %}
+                    {% if articleAuthor.author.institution is not empty %}
+                        <affiliationName affiliationId="{{ articleAuthor.author.institution.id }}">{{ articleAuthor.author.institution.name }}</affiliationName>
+                    {% endif %}
+                {% endfor %}
+            </affiliationsList>
+            <abstract language="{{ doajLanguageTransform(article.journal.mandatoryLang.code) }}">{{ article.abstract }}</abstract>
+            <fullTextUrl format="html">{{ path('ojs_article_page', {
+                    publisher: article.journal.publisher.slug,
+                    slug: article.journal.slug,
+                    issue_id: article.issue.id,
+                    article_id: article.id
+                }) }}</fullTextUrl>
+            <keywords>
+                {% for translation in article.translations %}
+                    {% for keyword in translation.keywords|split(',') %}
+                        <keyword>{{ keyword }}</keyword>
+                    {% endfor %}
+                {% endfor %}
+            </keywords>
+        </record>
+    {% endfor %}
+</records>
