@@ -1,0 +1,10 @@
+services:
+  export.left_menu_listener:
+    class: Ojs\ExportBundle\EventListener\LeftMenuListener
+    arguments: ["@security.authorization_checker", "@ojs.journal_service", "@security.token_storage"]
+    tags:
+      - { name: kernel.event_subscriber }
+
+  export_grid_action:
+    class: Ojs\ExportBundle\Service\ExportGridAction
+    arguments: ["@translator"]
