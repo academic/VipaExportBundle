@@ -2,6 +2,10 @@ ojs_data_export:
   path:     /journal/{journalId}/export
   defaults: { _controller: "OjsExportBundle:Export:index" }
 
+ojs_data_export_download:
+  path:     /journal/{journalId}/export/download
+  defaults: { _controller: "OjsExportBundle:Export:download" }
+
 ojs_data_export_article:
   resource: routing/Export/article.yml
   prefix:     /journal/{journalId}/export/article
