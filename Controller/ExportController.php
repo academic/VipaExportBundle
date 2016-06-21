@@ -23,8 +23,8 @@ class ExportController extends Controller
         $grid = $this->get('grid')->setSource($source);
         $gridAction = $this->get('export_grid_action');
         $actionColumn = new ActionsColumn("actions", 'actions');
-        $rowAction[] = $gridAction->exportDownload('ojs_journal_export_download', [
-            'id', 'journalId' => $journal->getId()
+        $rowAction[] = $gridAction->exportDownload('ojs_data_export_download', [
+            'id', 'journalId' => $journal->getId(),
             ]
         );
         $actionColumn->setRowActions($rowAction);
