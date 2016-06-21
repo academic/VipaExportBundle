@@ -1,6 +1,6 @@
 <?php
 
-namespace Ojs\DataBundle\Entity;
+namespace Ojs\ExportBundle\Entity;
 
 use APY\DataGridBundle\Grid\Mapping as GRID;
 use Ojs\JournalBundle\Entity\Journal;
