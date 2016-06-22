@@ -5,6 +5,7 @@ namespace Ojs\ExportBundle\Service;
 use Doctrine\ORM\EntityManager;
 use JMS\Serializer\SerializerBuilder;
 use Ojs\CoreBundle\Helper\FileHelper;
+use Ojs\JournalBundle\Entity\Article;
 use Ojs\JournalBundle\Entity\Journal;
 use JMS\Serializer\Serializer;
 use Ojs\ExportBundle\Entity\DataExport;
@@ -36,6 +37,11 @@ class DataExportService
     private $kernelRootDir;
 
     /**
+     * @var Article
+     */
+    private $article = null;
+
+    /**
      * JournalExportService constructor.
      *
      * @param EntityManager $em
@@ -57,6 +63,17 @@ class DataExportService
     }
 
     /**
+     * @param Article $article
+     * @return $this
+     */
+    public function setArticle(Article $article)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
      * @return mixed|string
      */
     public function journalToJson()
@@ -65,6 +82,28 @@ class DataExportService
             throw new \LogicException('You must to specify journal param');
         }
         return $this->serializer->serialize($this->journal, 'json');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function articleToJson()
+    {
+        if($this->article === null){
+            throw new \LogicException('You must to specify article param');
+        }
+        return $this->serializer->serialize($this->article, 'json');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function articleToXml()
+    {
+        if($this->article === null){
+            throw new \LogicException('You must to specify article param');
+        }
+        return $this->serializer->serialize($this->article, 'xml');
     }
 
     /**
@@ -81,9 +120,10 @@ class DataExportService
     /**
      * @param string $content
      * @param string $type
+     * @param string $fileName
      * @return string
      */
-    public function storeAsFile($content, $type)
+    public function storeAsFile($content, $type, $fileName)
     {
         $dataExportDir = $this->kernelRootDir . '/../web/uploads/data_export/';
         $fileHelper = new FileHelper();
@@ -91,7 +131,7 @@ class DataExportService
         if(!is_dir($dataExportDir.$generatePath)){
             mkdir($dataExportDir.$generatePath, 0775, true);
         }
-        $filePath = $generatePath . $this->journal->getTranslations()->first()->getTitle().'-'.$this->journal->getId().'.'.$type;
+        $filePath = $generatePath . $fileName.'.'.$type;
         file_put_contents($dataExportDir.$filePath, $content);
 
         return $filePath;

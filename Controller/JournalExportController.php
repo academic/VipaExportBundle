@@ -27,7 +27,7 @@ class JournalExportController extends Controller
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journal);
         $jsonJournalData = $dataExport->journalToJson();
-        $filePath = $dataExport->storeAsFile($jsonJournalData, 'json');
+        $filePath = $dataExport->storeAsFile($jsonJournalData, 'json', $journal->getId());
         $explode = explode('/', $filePath);
         $fileName = end($explode);
         $dataExport->addToHistory($filePath, 'json');
@@ -47,7 +47,7 @@ class JournalExportController extends Controller
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journal);
         $xmlJournalData = $dataExport->journalToXml();
-        $filePath = $dataExport->storeAsFile($xmlJournalData, 'xml');
+        $filePath = $dataExport->storeAsFile($xmlJournalData, 'xml', $journal->getId());
         $explode = explode('/', $filePath);
         $fileName = end($explode);
         $dataExport->addToHistory($filePath, 'xml');
@@ -71,7 +71,7 @@ class JournalExportController extends Controller
         $doajJournalData = $this->renderView('OjsExportBundle:JournalExport:doaj.xml.twig', [
             'articles' => $articles,
         ]);
-        $filePath = $dataExport->storeAsFile($doajJournalData, 'xml');
+        $filePath = $dataExport->storeAsFile($doajJournalData, 'xml', $journal->getId());
         $explode = explode('/', $filePath);
         $fileName = end($explode);
         $dataExport->addToHistory($filePath, 'doaj');

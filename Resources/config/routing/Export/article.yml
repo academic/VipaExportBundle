@@ -2,14 +2,14 @@ ojs_data_export_article:
   path:     /
   defaults: { _controller: "OjsExportBundle:ArticleExport:index" }
 
-ojs_data_export_article_json:
-  path:     /json
-  defaults: { _controller: "OjsExportBundle:ArticleExport:json" }
+ojs_data_export_single_article_json:
+  path:     /{id}/json
+  defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticleJson" }
 
-ojs_data_export_article_xml:
-  path:     /xml
-  defaults: { _controller: "OjsExportBundle:ArticleExport:xml" }
+ojs_data_export_single_article_xml:
+  path:     /{id}/xml
+  defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticleXml" }
 
-ojs_data_export_article_crossref:
-  path:     /crossref
-  defaults: { _controller: "OjsExportBundle:ArticleExport:crossref" }
+ojs_data_export_single_article_crossref:
+  path:     /{id}/crossref
+  defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticleCrossref" }

@@ -43,4 +43,61 @@ class ExportGridAction
         $rowAction->setRouteParametersMapping(['id' => 'id']);
         return $rowAction;
     }
+
+    /**
+     * @param int $journalId
+     * @return RowAction
+     */
+    public function exportSingleArticleAsJson($journalId)
+    {
+        $rowAction = new RowAction('JSON', 'ojs_data_export_single_article_json');
+        $rowAction->setAttributes(
+            [
+                'class' => 'btn btn-primary btn-xs ',
+                'data-toggle' => 'tooltip',
+                'title' => $this->translator->trans('export.as.json'),
+            ]
+        );
+        $rowAction->setTarget('_blank');
+        $rowAction->setRouteParameters(['id', 'journalId' => $journalId]);
+        return $rowAction;
+    }
+
+    /**
+     * @param int $journalId
+     * @return RowAction
+     */
+    public function exportSingleArticleAsXml($journalId)
+    {
+        $rowAction = new RowAction('XML', 'ojs_data_export_single_article_xml');
+        $rowAction->setAttributes(
+            [
+                'class' => 'btn btn-warning btn-xs ',
+                'data-toggle' => 'tooltip',
+                'title' => $this->translator->trans('export.as.xml'),
+            ]
+        );
+        $rowAction->setTarget('_blank');
+        $rowAction->setRouteParameters(['id', 'journalId' => $journalId]);
+        return $rowAction;
+    }
+
+    /**
+     * @param int $journalId
+     * @return RowAction
+     */
+    public function exportSingleArticleAsCrossref($journalId)
+    {
+        $rowAction = new RowAction('CrossRef', 'ojs_data_export_single_article_crossref');
+        $rowAction->setAttributes(
+            [
+                'class' => 'btn btn-info btn-xs ',
+                'data-toggle' => 'tooltip',
+                'title' => $this->translator->trans('export.as.crossref'),
+            ]
+        );
+        $rowAction->setTarget('_blank');
+        $rowAction->setRouteParameters(['id', 'journalId' => $journalId]);
+        return $rowAction;
+    }
 }
