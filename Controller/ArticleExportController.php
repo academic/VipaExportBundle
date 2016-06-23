@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ArticleExportController extends Controller
 {
     /**
+     * @param Request $request
      * @return Response
      */
     public function indexAction(Request $request)
@@ -184,6 +185,33 @@ class ArticleExportController extends Controller
             'journal' => $journal,
         ]);
         $filePath = $dataExport->storeAsFile($crossrefCrossrefData, 'xml', $article->getId());
+        $explode = explode('/', $filePath);
+        $fileName = end($explode);
+        $dataExport->addToHistory($filePath, 'crossref');
+        $file = $this->getParameter('kernel.root_dir'). '/../web/uploads/data_export/'.$filePath;
+        $response = new BinaryFileResponse($file);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
+
+        return $response;
+    }
+
+    /**
+     * @param $primaryKeys
+     * @return BinaryFileResponse
+     */
+    public function massArticleCrossref($primaryKeys)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $articleRepo = $em->getRepository(Article::class);
+        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
+        $dataExport = $this->get('ojs.data_export');
+        $dataExport->setJournal($journal);
+        $articles = $articleRepo->findById($primaryKeys);
+        $crossrefCrossrefData = $this->renderView('OjsExportBundle:ArticleExport:crossref.xml.twig', [
+            'articles' => $articles,
+            'journal' => $journal,
+        ]);
+        $filePath = $dataExport->storeAsFile($crossrefCrossrefData, 'xml', 'articles');
         $explode = explode('/', $filePath);
         $fileName = end($explode);
         $dataExport->addToHistory($filePath, 'crossref');
