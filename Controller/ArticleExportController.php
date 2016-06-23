@@ -122,8 +122,27 @@ class ArticleExportController extends Controller
 
     /**
      * @param Request $request
+     * @param Article $article
+     * @return BinaryFileResponse
      */
-    public function singleArticleCrossrefAction(Request $request)
+    public function singleArticleCrossrefAction(Request $request, Article $article)
     {
+        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
+        $dataExport = $this->get('ojs.data_export');
+        $dataExport->setJournal($journal);
+        $dataExport->setArticle($article);
+        $crossrefCrossrefData = $this->renderView('OjsExportBundle:ArticleExport:crossref.xml.twig', [
+            'articles' => [$article],
+            'journal' => $journal,
+        ]);
+        $filePath = $dataExport->storeAsFile($crossrefCrossrefData, 'xml', $article->getId());
+        $explode = explode('/', $filePath);
+        $fileName = end($explode);
+        $dataExport->addToHistory($filePath, 'crossref');
+        $file = $this->getParameter('kernel.root_dir'). '/../web/uploads/data_export/'.$filePath;
+        $response = new BinaryFileResponse($file);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
+
+        return $response;
     }
 }
