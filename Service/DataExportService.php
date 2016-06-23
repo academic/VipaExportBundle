@@ -136,6 +136,17 @@ class DataExportService
     /**
      * @return mixed|string
      */
+    public function articlesToXml()
+    {
+        if($this->articles === []){
+            throw new \LogicException('You must to specify articles param');
+        }
+        return $this->serializer->serialize($this->articles, 'xml');
+    }
+
+    /**
+     * @return mixed|string
+     */
     public function journalToXml()
     {
         if($this->journal === null){
