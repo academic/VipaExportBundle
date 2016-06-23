@@ -9,8 +9,3 @@ ojs_data_export_single_issue_json:
 ojs_data_export_single_issue_xml:
   path:     /{id}/xml
   defaults: { _controller: "OjsExportBundle:IssueExport:singleIssueXml" }
-
-ojs_data_export_single_issue_crossref:
-  path:     /{id}/crossref
-  defaults: { _controller: "OjsExportBundle:IssueExport:singleIssueCrossref" }
-

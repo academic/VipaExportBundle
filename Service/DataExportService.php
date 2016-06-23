@@ -10,6 +10,7 @@ use Ojs\JournalBundle\Entity\Issue;
 use Ojs\JournalBundle\Entity\Journal;
 use JMS\Serializer\Serializer;
 use Ojs\ExportBundle\Entity\DataExport;
+use Ojs\JournalBundle\Entity\JournalUser;
 
 /**
  * Class DataExportService
@@ -56,6 +57,16 @@ class DataExportService
      * @var Issue[]
      */
     private $issues = [];
+
+    /**
+     * @var JournalUser
+     */
+    private $user = null;
+
+    /**
+     * @var JournalUser[]
+     */
+    private $users = [];
 
     /**
      * JournalExportService constructor.
@@ -118,6 +129,28 @@ class DataExportService
     public function setIssues($issues = [])
     {
         $this->issues = $issues;
+
+        return $this;
+    }
+
+    /**
+     * @param JournalUser $user
+     * @return $this
+     */
+    public function setUser(JournalUser $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @param JournalUser[]|array $users
+     * @return $this
+     */
+    public function setUsers($users = [])
+    {
+        $this->users = $users;
 
         return $this;
     }
@@ -208,6 +241,50 @@ class DataExportService
             throw new \LogicException('You must to specify issues param');
         }
         return $this->serializer->serialize($this->issues, 'xml');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function userToJson()
+    {
+        if($this->user === null){
+            throw new \LogicException('You must to specify user param');
+        }
+        return $this->serializer->serialize($this->user, 'json');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function usersToJson()
+    {
+        if($this->users === []){
+            throw new \LogicException('You must to specify users param');
+        }
+        return $this->serializer->serialize($this->users, 'json');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function userToXml()
+    {
+        if($this->user === null){
+            throw new \LogicException('You must to specify user param');
+        }
+        return $this->serializer->serialize($this->user, 'xml');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function usersToXml()
+    {
+        if($this->users === []){
+            throw new \LogicException('You must to specify users param');
+        }
+        return $this->serializer->serialize($this->users, 'xml');
     }
 
     /**
