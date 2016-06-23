@@ -49,13 +49,13 @@ class ArticleExportController extends Controller
 
         //setup mass actions
         $exportJsonAction = new MassAction($translator->trans('export.as.json'), [
-            $this, 'jsonAction'
+            $this, 'massArticleJson'
         ]);
         $exportXmlAction = new MassAction($translator->trans('export.as.xml'), [
-            $this, 'xmlAction'
+            $this, 'massArticleXml'
         ]);
         $exportCrossrefAction = new MassAction($translator->trans('export.as.crossref'), [
-            $this, 'crossrefAction'
+            $this, 'massArticleCrossref'
         ]);
         $grid->addMassAction($exportJsonAction);
         $grid->addMassAction($exportXmlAction);
@@ -88,6 +88,33 @@ class ArticleExportController extends Controller
         $dataExport->setArticle($article);
         $jsonArticleData = $dataExport->articleToJson();
         $filePath = $dataExport->storeAsFile($jsonArticleData, 'json', $article->getId());
+        $explode = explode('/', $filePath);
+        $fileName = end($explode);
+        $dataExport->addToHistory($filePath, 'json');
+        $file = $this->getParameter('kernel.root_dir'). '/../web/uploads/data_export/'.$filePath;
+        $response = new BinaryFileResponse($file);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
+
+        return $response;
+    }
+
+    /**
+     * @param $primaryKeys
+     * @param $allPrimaryKeys
+     * @param $session
+     * @param $parameters
+     * @return BinaryFileResponse
+     */
+    public function massArticleJson($primaryKeys)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $articleRepo = $em->getRepository(Article::class);
+        $journalService = $this->get('ojs.journal_service');
+        $dataExport = $this->get('ojs.data_export');
+        $dataExport->setJournal($journalService->getSelectedJournal());
+        $dataExport->setArticles($articleRepo->findById($primaryKeys));
+        $jsonArticlesData = $dataExport->articlesToJson();
+        $filePath = $dataExport->storeAsFile($jsonArticlesData, 'json', 'articles');
         $explode = explode('/', $filePath);
         $fileName = end($explode);
         $dataExport->addToHistory($filePath, 'json');

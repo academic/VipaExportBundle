@@ -42,6 +42,11 @@ class DataExportService
     private $article = null;
 
     /**
+     * @var Article[]
+     */
+    private $articles = [];
+
+    /**
      * JournalExportService constructor.
      *
      * @param EntityManager $em
@@ -74,6 +79,17 @@ class DataExportService
     }
 
     /**
+     * @param Article[]|array $articles
+     * @return $this
+     */
+    public function setArticles($articles = [])
+    {
+        $this->articles = $articles;
+
+        return $this;
+    }
+
+    /**
      * @return mixed|string
      */
     public function journalToJson()
@@ -93,6 +109,17 @@ class DataExportService
             throw new \LogicException('You must to specify article param');
         }
         return $this->serializer->serialize($this->article, 'json');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function articlesToJson()
+    {
+        if($this->articles === []){
+            throw new \LogicException('You must to specify articles param');
+        }
+        return $this->serializer->serialize($this->articles, 'json');
     }
 
     /**
