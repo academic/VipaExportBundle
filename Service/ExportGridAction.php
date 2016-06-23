@@ -100,4 +100,42 @@ class ExportGridAction
         $rowAction->setRouteParameters(['id', 'journalId' => $journalId]);
         return $rowAction;
     }
+
+    /**
+     * @param int $journalId
+     * @return RowAction
+     */
+    public function exportSingleIssueAsJson($journalId)
+    {
+        $rowAction = new RowAction('JSON', 'ojs_data_export_single_issue_json');
+        $rowAction->setAttributes(
+            [
+                'class' => 'btn btn-primary btn-xs ',
+                'data-toggle' => 'tooltip',
+                'title' => $this->translator->trans('export.as.json'),
+            ]
+        );
+        $rowAction->setTarget('_blank');
+        $rowAction->setRouteParameters(['id', 'journalId' => $journalId]);
+        return $rowAction;
+    }
+
+    /**
+     * @param int $journalId
+     * @return RowAction
+     */
+    public function exportSingleIssueAsXml($journalId)
+    {
+        $rowAction = new RowAction('XML', 'ojs_data_export_single_issue_xml');
+        $rowAction->setAttributes(
+            [
+                'class' => 'btn btn-warning btn-xs ',
+                'data-toggle' => 'tooltip',
+                'title' => $this->translator->trans('export.as.xml'),
+            ]
+        );
+        $rowAction->setTarget('_blank');
+        $rowAction->setRouteParameters(['id', 'journalId' => $journalId]);
+        return $rowAction;
+    }
 }

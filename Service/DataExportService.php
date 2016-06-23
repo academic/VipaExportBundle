@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use JMS\Serializer\SerializerBuilder;
 use Ojs\CoreBundle\Helper\FileHelper;
 use Ojs\JournalBundle\Entity\Article;
+use Ojs\JournalBundle\Entity\Issue;
 use Ojs\JournalBundle\Entity\Journal;
 use JMS\Serializer\Serializer;
 use Ojs\ExportBundle\Entity\DataExport;
@@ -45,6 +46,16 @@ class DataExportService
      * @var Article[]
      */
     private $articles = [];
+
+    /**
+     * @var Issue
+     */
+    private $issue = null;
+
+    /**
+     * @var Issue[]
+     */
+    private $issues = [];
 
     /**
      * JournalExportService constructor.
@@ -90,14 +101,25 @@ class DataExportService
     }
 
     /**
-     * @return mixed|string
+     * @param Issue $issue
+     * @return $this
      */
-    public function journalToJson()
+    public function setIssue(Issue $issue)
     {
-        if($this->journal === null){
-            throw new \LogicException('You must to specify journal param');
-        }
-        return $this->serializer->serialize($this->journal, 'json');
+        $this->issue = $issue;
+
+        return $this;
+    }
+
+    /**
+     * @param Issue[]|array $issues
+     * @return $this
+     */
+    public function setIssues($issues = [])
+    {
+        $this->issues = $issues;
+
+        return $this;
     }
 
     /**
@@ -147,12 +169,67 @@ class DataExportService
     /**
      * @return mixed|string
      */
+    public function issueToJson()
+    {
+        if($this->issue === null){
+            throw new \LogicException('You must to specify issue param');
+        }
+        return $this->serializer->serialize($this->issue, 'json');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function issuesToJson()
+    {
+        if($this->issues === []){
+            throw new \LogicException('You must to specify issues param');
+        }
+        return $this->serializer->serialize($this->issues, 'json');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function issueToXml()
+    {
+        if($this->issue === null){
+            throw new \LogicException('You must to specify issue param');
+        }
+        return $this->serializer->serialize($this->issue, 'xml');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function issuesToXml()
+    {
+        if($this->issues === []){
+            throw new \LogicException('You must to specify issues param');
+        }
+        return $this->serializer->serialize($this->issues, 'xml');
+    }
+
+    /**
+     * @return mixed|string
+     */
     public function journalToXml()
     {
         if($this->journal === null){
             throw new \LogicException('You must to specify journal param');
         }
         return $this->serializer->serialize($this->journal, 'xml');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function journalToJson()
+    {
+        if($this->journal === null){
+            throw new \LogicException('You must to specify journal param');
+        }
+        return $this->serializer->serialize($this->journal, 'json');
     }
 
     /**
