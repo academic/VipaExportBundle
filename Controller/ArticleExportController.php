@@ -105,9 +105,15 @@ class ArticleExportController extends Controller
      */
     public function massArticleJson($primaryKeys)
     {
+        $journalService = $this->get('ojs.journal_service');
+        if(count($primaryKeys) < 1){
+            $this->errorFlashBag('you.must.select.one.least.element');
+            return $this->redirectToRoute('ojs_data_export_user', [
+                'journalId' => $journalService->getSelectedJournal()->getId(),
+            ]);
+        }
         $em = $this->getDoctrine()->getManager();
         $articleRepo = $em->getRepository(Article::class);
-        $journalService = $this->get('ojs.journal_service');
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setArticles($articleRepo->findById($primaryKeys));
@@ -151,9 +157,15 @@ class ArticleExportController extends Controller
      */
     public function massArticleXml($primaryKeys)
     {
+        $journalService = $this->get('ojs.journal_service');
+        if(count($primaryKeys) < 1){
+            $this->errorFlashBag('you.must.select.one.least.element');
+            return $this->redirectToRoute('ojs_data_export_user', [
+                'journalId' => $journalService->getSelectedJournal()->getId(),
+            ]);
+        }
         $em = $this->getDoctrine()->getManager();
         $articleRepo = $em->getRepository(Article::class);
-        $journalService = $this->get('ojs.journal_service');
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setArticles($articleRepo->findById($primaryKeys));
@@ -201,9 +213,16 @@ class ArticleExportController extends Controller
      */
     public function massArticleCrossref($primaryKeys)
     {
+        $journalService = $this->get('ojs.journal_service');
+        if(count($primaryKeys) < 1){
+            $this->errorFlashBag('you.must.select.one.least.element');
+            return $this->redirectToRoute('ojs_data_export_user', [
+                'journalId' => $journalService->getSelectedJournal()->getId(),
+            ]);
+        }
         $em = $this->getDoctrine()->getManager();
         $articleRepo = $em->getRepository(Article::class);
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
+        $journal = $journalService->getSelectedJournal();
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journal);
         $articles = $articleRepo->findById($primaryKeys);

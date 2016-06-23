@@ -76,9 +76,15 @@ class UserExportController extends Controller
      */
     public function massUserJson($primaryKeys)
     {
+        $journalService = $this->get('ojs.journal_service');
+        if(count($primaryKeys) < 1){
+            $this->errorFlashBag('you.must.select.one.least.element');
+            return $this->redirectToRoute('ojs_data_export_user', [
+                'journalId' => $journalService->getSelectedJournal()->getId(),
+            ]);
+        }
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository(JournalUser::class);
-        $journalService = $this->get('ojs.journal_service');
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setUsers($userRepo->findById($primaryKeys));
@@ -119,11 +125,17 @@ class UserExportController extends Controller
      * @param $primaryKeys
      * @return BinaryFileResponse
      */
-    public function massUserXml($primaryKeys)
+    public function massUserXml($primaryKeys = [])
     {
+        $journalService = $this->get('ojs.journal_service');
+        if(count($primaryKeys) < 1){
+            $this->errorFlashBag('you.must.select.one.least.element');
+            return $this->redirectToRoute('ojs_data_export_user', [
+                'journalId' => $journalService->getSelectedJournal()->getId(),
+            ]);
+        }
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository(JournalUser::class);
-        $journalService = $this->get('ojs.journal_service');
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setUsers($userRepo->findById($primaryKeys));
