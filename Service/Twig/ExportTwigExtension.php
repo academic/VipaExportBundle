@@ -40,6 +40,6 @@ class ExportTwigExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'api_twig_extension';
+        return 'export_twig_extension';
     }
 }
