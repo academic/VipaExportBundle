@@ -3,6 +3,7 @@
 namespace Ojs\ExportBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
 use Ojs\CoreBundle\Helper\FileHelper;
 use Ojs\JournalBundle\Entity\Article;
@@ -251,7 +252,7 @@ class DataExportService
         if($this->user === null){
             throw new \LogicException('You must to specify user param');
         }
-        return $this->serializer->serialize($this->user, 'json');
+        return $this->serializer->serialize($this->user, 'json', SerializationContext::create()->setGroups(['export']));
     }
 
     /**
@@ -262,7 +263,7 @@ class DataExportService
         if($this->users === []){
             throw new \LogicException('You must to specify users param');
         }
-        return $this->serializer->serialize($this->users, 'json');
+        return $this->serializer->serialize($this->users, 'json', SerializationContext::create()->setGroups(['export']));
     }
 
     /**
@@ -273,7 +274,7 @@ class DataExportService
         if($this->user === null){
             throw new \LogicException('You must to specify user param');
         }
-        return $this->serializer->serialize($this->user, 'xml');
+        return $this->serializer->serialize($this->user, 'xml', SerializationContext::create()->setGroups(['export']));
     }
 
     /**
@@ -284,7 +285,7 @@ class DataExportService
         if($this->users === []){
             throw new \LogicException('You must to specify users param');
         }
-        return $this->serializer->serialize($this->users, 'xml');
+        return $this->serializer->serialize($this->users, 'xml', SerializationContext::create()->setGroups(['export']));
     }
 
     /**
