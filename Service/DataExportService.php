@@ -30,6 +30,11 @@ class DataExportService
     private $serializer;
 
     /**
+     * @var \Twig_Environment
+     */
+    private $twig;
+
+    /**
      * @var Journal
      */
     private $journal = null;
@@ -75,11 +80,12 @@ class DataExportService
      * @param EntityManager $em
      * @param $kernelRootDir
      */
-    public function __construct(EntityManager $em, $kernelRootDir)
+    public function __construct(EntityManager $em, $kernelRootDir, \Twig_Environment $twig)
     {
         $this->serializer       = SerializerBuilder::create()->build();
         $this->kernelRootDir    = $kernelRootDir;
         $this->em               = $em;
+        $this->twig             = $twig;
     }
 
     /**
@@ -186,7 +192,9 @@ class DataExportService
         if($this->article === null){
             throw new \LogicException('You must to specify article param');
         }
-        return $this->serializer->serialize($this->article, 'xml');
+        return $this->twig->render("OjsExportBundle:ArticleExport:article.xml.twig", [
+            'articles' => [$this->article],
+        ]);
     }
 
     /**
@@ -197,7 +205,9 @@ class DataExportService
         if($this->articles === []){
             throw new \LogicException('You must to specify articles param');
         }
-        return $this->serializer->serialize($this->articles, 'xml');
+        return $this->twig->render("OjsExportBundle:ArticleExport:article.xml.twig", [
+            'articles' => $this->articles,
+        ]);
     }
 
     /**

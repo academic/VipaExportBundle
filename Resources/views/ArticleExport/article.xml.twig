@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result>
+    {% for article in articles %}
+    <entry>
+        <id>{{ article.id }}</id>
+        <translations>
+            {% for translation in article.translations %}
+            <entry>
+                <id>{{ translation.id }}</id>
+                <locale><![CDATA[{{ translation.locale }}]]></locale>
+                <title><![CDATA[{{ translation.title }}]]></title>
+                <keywords><![CDATA[{{ translation.keywords }}]]></keywords>
+                <abstract><![CDATA[{{ translation.abstract|raw }}]]></abstract>
+            </entry>
+            {% endfor %}
+        </translations>
+        <status>{{ article.status }}</status>
+        <doi><![CDATA[{{ article.doi }}]]></doi>
+        <anonymous>{{ article.anonymous }}</anonymous>
+        <submission_date><![CDATA[{{ article.submissionDate|date }}]]></submission_date>
+        <pubdate><![CDATA[{{ article.pubdate|date }}]]></pubdate>
+        <first_page>{{ article.firstPage }}</first_page>
+        <last_page>{{ article.lastPage }}</last_page>
+        <primary_language><![CDATA[{{ article.primaryLanguage }}]]></primary_language>
+        <order_num>{{ article.orderNum }}</order_num>
+        {% if article.issue is not empty %}
+        <issue>
+            <id>{{ article.issue.id }}</id>
+            <volume><![CDATA[{{ article.issue.volume }}]]></volume>
+            <number><![CDATA[{{ article.issue.number }}]]></number>
+        </issue>
+        {% endif %}
+        <article_authors>
+            {% for articleAuthor in article.articleAuthors %}
+            <entry>
+                <id>{{ articleAuthor.id }}</id>
+                <author_order>{{ articleAuthor.authorOrder }}</author_order>
+                <author>
+                    <id>{{ articleAuthor.author.id }}</id>
+                    <first_name><![CDATA[{{ articleAuthor.author.firstName }}]]></first_name>
+                    <last_name><![CDATA[{{ articleAuthor.author.lastName }}]]></last_name>
+                    <email><![CDATA[{{ articleAuthor.author.email }}]]></email>
+                </author>
+            </entry>
+            {% endfor %}
+        </article_authors>
+    </entry>
+    {% endfor %}
+</result>

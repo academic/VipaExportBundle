@@ -17,6 +17,7 @@ services:
     arguments:
       - "@doctrine.orm.entity_manager"
       - "%kernel.root_dir%"
+      - "@twig"
 
   ojs_export.twig.export_extension:
       class: Ojs\ExportBundle\Service\Twig\ExportTwigExtension
