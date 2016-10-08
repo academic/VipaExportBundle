@@ -3,6 +3,7 @@
 namespace Ojs\ExportBundle\Controller;
 
 use Ojs\CoreBundle\Controller\OjsController as Controller;
+use Ojs\CoreBundle\Params\ArticleStatuses;
 use Ojs\JournalBundle\Entity\Article;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,7 +68,9 @@ class JournalExportController extends Controller
         $journal = $this->get('ojs.journal_service')->getSelectedJournal();
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journal);
-        $articles = $em->getRepository(Article::class)->findAll();
+        $articles = $em->getRepository(Article::class)->findBy([
+            'status' => ArticleStatuses::STATUS_PUBLISHED,
+        ]);
         $doajJournalData = $this->renderView('OjsExportBundle:JournalExport:doaj.xml.twig', [
             'articles' => $articles,
         ]);

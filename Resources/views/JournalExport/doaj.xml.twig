@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <records xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.doaj.org/schemas/doajArticles.xsd">
     {% for article in articles %}
-        <record>
+        <record  language="{{ doajLanguageTransform(article.journal.mandatoryLang.code) }}">
             <publisher>{{ article.journal.publisher.name }}</publisher>
             <journalTitle>{{ article.journal.title }}</journalTitle>
             <eissn>{{ article.journal.eissn }}</eissn>
             <publicationDate>{{ article.pubdate|date('Y-m-d') }}</publicationDate>
             <volume>{{ article.issue.volume }}</volume>
-            <issue>{{ article.issue.id }}</issue>
+            <issue>{{ article.issue.number }}</issue>
             <startPage>{{ article.firstPage }}</startPage>
             <endPage>{{ article.lastPage }}</endPage>
             <doi>{{ article.doi }}</doi>
