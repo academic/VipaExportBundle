@@ -23,26 +23,8 @@ class IssueExportController extends Controller
     {
         $translator = $this->get('translator');
         $grid = $this->get('grid');
-        $cache = $this->get('array_cache');
         $journal = $this->get('ojs.journal_service')->getSelectedJournal();
         $source = new Entity(Issue::class, 'export');
-        $source->manipulateRow(
-            function (Row $row) use ($request, $cache) {
-                /** @var Issue $entity */
-                $entity = $row->getEntity();
-                if (!is_null($entity)) {
-                    $entity->setDefaultLocale($request->getDefaultLocale());
-                    if($cache->contains('grid_row_id_'.$entity->getId())){
-                        $row->setClass('hidden');
-                    }else{
-                        $cache->save('grid_row_id_'.$entity->getId(), true);
-                        $row->setField('translations.title', $entity->getTitleTranslations());
-                    }
-                }
-
-                return $row;
-            }
-        );
         $grid->setSource($source);
 
         //setup mass actions
