@@ -51,15 +51,14 @@
                         <first_page>{{ article.firstPage }}</first_page>
                         <other_pages>{{ article.lastPage }}</other_pages>
                     </pages>
+                    {% if article.doi is not empty %}
                     <doi_data>
                         <doi>{{ article.doi }}</doi>
-                        <resource>{{ url('ojs_article_page', {
-                                publisher: journal.publisher.slug,
-                                slug: journal.slug,
-                                issue_id: article.issue.id,
-                                article_id: article.id
+                        <resource>{{ url('site_shortlink_doi', {
+                                doi: article.doi,
                             }, false) }}</resource>
                     </doi_data>
+                    {% endif %}
                 </journal_article>
             </journal>
         {% endfor %}
