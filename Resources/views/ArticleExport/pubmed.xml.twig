@@ -7,8 +7,12 @@
                 <PublisherName>{{ journal.publisher.name }}</PublisherName>
                 <JournalTitle>{{ journal.title }}</JournalTitle>
                 <Issn>{{ journal.issn }}</Issn>
-                <Volume>{{ article.issue.volume }}</Volume>
-                <Issue>{{ article.issue.id }}</Issue>
+                {% if article.issue.volume is defined %}
+                    <Volume>{{ article.issue.volume }}</Volume>
+                {% endif %}
+                {% if article.issue.id is defined %}
+                    <Issue>{{ article.issue.id }}</Issue>
+                {% endif %}
                 <PubDate PubStatus="epublish">
                     <Year>{{ article.pubDate|date('Y') }}</Year>
                     <Month>{{ article.pubDate|date('m') }}</Month>
@@ -37,11 +41,6 @@
                     <Year>{{ article.acceptanceDate|date('Y') }}</Year>
                     <Month>{{ article.acceptanceDate|date('m') }}</Month>
                     <Day>{{ article.acceptanceDate|date('d') }}</Day>
-                </PubDate>
-                <PubDate PubStatus="revised">
-                    <Year></Year>
-                    <Month></Month>
-                    <Day></Day>
                 </PubDate>
             </History>
             <Abstract>{{ article.abstract }}</Abstract>
