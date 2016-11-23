@@ -105,6 +105,25 @@ class ExportGridAction
      * @param int $journalId
      * @return RowAction
      */
+    public function exportSingleArticleAsPubmed($journalId)
+    {
+        $rowAction = new RowAction('Pubmed', 'ojs_data_export_single_article_pubmed');
+        $rowAction->setAttributes(
+            [
+                'class' => 'btn btn-success btn-xs ',
+                'data-toggle' => 'tooltip',
+                'title' => $this->translator->trans('export.as.pubmed'),
+            ]
+        );
+        $rowAction->setTarget('_blank');
+        $rowAction->setRouteParameters(['id', 'journalId' => $journalId]);
+        return $rowAction;
+    }
+
+    /**
+     * @param int $journalId
+     * @return RowAction
+     */
     public function exportSingleIssueAsJson($journalId)
     {
         $rowAction = new RowAction('JSON', 'ojs_data_export_single_issue_json');

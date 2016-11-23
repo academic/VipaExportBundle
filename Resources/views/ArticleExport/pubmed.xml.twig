@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ArticleSet PUBLIC "-//NLM//DTD PubMed 2.0//EN" "http://www.ncbi.nlm.nih.gov:80/entrez/query/static/PubMed.dtd">
+<ArticleSet>
+    {% for article in articles %}
+        <Article>
+            <Journal>
+                <PublisherName>{{ journal.publisher.name }}</PublisherName>
+                <JournalTitle>{{ journal.title }}</JournalTitle>
+                <Issn>{{ journal.issn }}</Issn>
+                {% if article.issue.volume is defined %}
+                    <Volume>{{ article.issue.volume }}</Volume>
+                {% endif %}
+                {% if article.issue.id is defined %}
+                    <Issue>{{ article.issue.id }}</Issue>
+                {% endif %}
+                <PubDate PubStatus="epublish">
+                    <Year>{{ article.pubDate|date('Y') }}</Year>
+                    <Month>{{ article.pubDate|date('m') }}</Month>
+                    <Day>{{ article.pubDate|date('d') }}</Day>
+                </PubDate>
+            </Journal>
+            <ArticleTitle>{{ article.title }}</ArticleTitle>
+            <FirstPage>{{ article.firstPage }}</FirstPage>
+            <LastPage>{{ article.lastPage }}</LastPage>
+            <Language>{{ article.primaryLanguage }}</Language>
+            <AuthorList>
+                {% for articleAuthor in article.articleAuthors %}
+                    <Author>
+                        <FirstName>{{ articleAuthor.author.firstName }}</FirstName>
+                        <LastName>{{ articleAuthor.author.lastName }}</LastName>
+                     </Author>
+                {% endfor %}
+            </AuthorList>
+            <History>
+                <PubDate PubStatus="received">
+                    <Year>{{ article.submissionDate|date('Y') }}</Year>
+                    <Month>{{ article.submissionDate|date('m') }}</Month>
+                    <Day>{{ article.submissionDate|date('d') }}</Day>
+                </PubDate>
+                <PubDate PubStatus="accepted">
+                    <Year>{{ article.acceptanceDate|date('Y') }}</Year>
+                    <Month>{{ article.acceptanceDate|date('m') }}</Month>
+                    <Day>{{ article.acceptanceDate|date('d') }}</Day>
+                </PubDate>
+            </History>
+            <Abstract>{{ article.abstract }}</Abstract>
+        </Article>
+    {% endfor %}
+</ArticleSet>

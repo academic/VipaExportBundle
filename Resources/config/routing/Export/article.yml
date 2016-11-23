@@ -13,3 +13,7 @@ ojs_data_export_single_article_xml:
 ojs_data_export_single_article_crossref:
   path:     /{id}/crossref
   defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticleCrossref" }
+
+ojs_data_export_single_article_pubmed:
+  path:     /{id}/pubmed
+  defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticlePubmed" }

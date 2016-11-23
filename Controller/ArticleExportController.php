@@ -37,9 +37,13 @@ class ArticleExportController extends Controller
         $exportCrossrefAction = new MassAction($translator->trans('export.as.crossref'), [
             $this, 'massArticleCrossref'
         ]);
+        $exportPubmedAction = new MassAction($translator->trans('export.as.pubmed'), [
+            $this, 'massArticlePubmed'
+        ]);
         $grid->addMassAction($exportJsonAction);
         $grid->addMassAction($exportXmlAction);
         $grid->addMassAction($exportCrossrefAction);
+        $grid->addMassAction($exportPubmedAction);
 
         //setup sing article export actions
         $exportGridAction = $this->get('export_grid_action');
@@ -47,6 +51,7 @@ class ArticleExportController extends Controller
         $rowAction[] = $exportGridAction->exportSingleArticleAsCrossref($journal->getId());
         $rowAction[] = $exportGridAction->exportSingleArticleAsJson($journal->getId());
         $rowAction[] = $exportGridAction->exportSingleArticleAsXml($journal->getId());
+        $rowAction[] = $exportGridAction->exportSingleArticleAsPubmed($journal->getId());
         $actionColumn->setRowActions($rowAction);
         $grid->addColumn($actionColumn);
 
@@ -213,6 +218,66 @@ class ArticleExportController extends Controller
         $explode = explode('/', $filePath);
         $fileName = end($explode);
         $dataExport->addToHistory($filePath, 'crossref');
+        $file = $this->getParameter('kernel.root_dir'). '/../web/uploads/data_export/'.$filePath;
+        $response = new BinaryFileResponse($file);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
+
+        return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @param Article $article
+     * @return BinaryFileResponse
+     */
+    public function singleArticlePubmedAction(Request $request, Article $article)
+    {
+        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
+        $dataExport = $this->get('ojs.data_export');
+        $dataExport->setJournal($journal);
+        $dataExport->setArticle($article);
+        $articlePubmedData = $this->renderView('OjsExportBundle:ArticleExport:pubmed.xml.twig', [
+            'articles' => [$article],
+            'journal' => $journal,
+        ]);
+        $filePath = $dataExport->storeAsFile($articlePubmedData, 'xml', $article->getId());
+        $explode = explode('/', $filePath);
+        $fileName = end($explode);
+        $dataExport->addToHistory($filePath, 'pubmed');
+        $file = $this->getParameter('kernel.root_dir'). '/../web/uploads/data_export/'.$filePath;
+        $response = new BinaryFileResponse($file);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
+
+        return $response;
+    }
+
+    /**
+     * @param $primaryKeys
+     * @return BinaryFileResponse
+     */
+    public function massArticlePubmed($primaryKeys)
+    {
+        $journalService = $this->get('ojs.journal_service');
+        if(count($primaryKeys) < 1){
+            $this->errorFlashBag('you.must.select.one.least.element');
+            return $this->redirectToRoute('ojs_data_export_user', [
+                'journalId' => $journalService->getSelectedJournal()->getId(),
+            ]);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $articleRepo = $em->getRepository(Article::class);
+        $journal = $journalService->getSelectedJournal();
+        $dataExport = $this->get('ojs.data_export');
+        $dataExport->setJournal($journal);
+        $articles = $articleRepo->findById($primaryKeys);
+        $articlePubmedData = $this->renderView('OjsExportBundle:ArticleExport:pubmed.xml.twig', [
+            'articles' => $articles,
+            'journal' => $journal,
+        ]);
+        $filePath = $dataExport->storeAsFile($articlePubmedData, 'xml', 'articles');
+        $explode = explode('/', $filePath);
+        $fileName = end($explode);
+        $dataExport->addToHistory($filePath, 'pubmed');
         $file = $this->getParameter('kernel.root_dir'). '/../web/uploads/data_export/'.$filePath;
         $response = new BinaryFileResponse($file);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
