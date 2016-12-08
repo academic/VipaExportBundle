@@ -50,8 +50,12 @@
                         <year>{{ article.pubDate|date('Y') }}</year>
                     </publication_date>
                     <pages>
-                        <first_page>{{ article.firstPage }}</first_page>
-                        <other_pages>{{ article.lastPage }}</other_pages>
+                        {% if article.firstPage is not empty %}
+                            <first_page>{{ article.firstPage }}</first_page>
+                        {% endif %}
+                        {% if article.lastPage is not empty %}
+                            <other_pages>{{ article.lastPage }}</other_pages>
+                        {% endif %}
                     </pages>
                     {% if article.doi is not empty %}
                     <doi_data>
