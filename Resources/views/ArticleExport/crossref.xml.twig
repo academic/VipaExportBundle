@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doi_batch xmlns="http://www.crossref.org/schema/4.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3.0" xsi:schemaLocation="http://www.crossref.org/schema/4.3.0 http://www.crossref.org/schema/deposit/crossref4.3.0.xsd">
     <head>
-        <doi_batch_id>[BATCH_ID_GOES_HERE]</doi_batch_id>
-        <timestamp>[BATCH_TIME_GOES_HERE]</timestamp>
+        <doi_batch_id>article_{{ (articles|first).id }}_{{ date().timestamp }}</doi_batch_id>
+        <timestamp>{{ date().timestamp }}</timestamp>
         <depositor>
-            <name>[DEPOSITOR_NAME_GOES_HERE]</name>
-            <email_address>[DEPOSITOR_EMAIL_GOES_HERE]</email_address>
+            <name>{% if journal.extraFields.crossrefConfig is not empty %}{{ journal.extraFields.crossrefConfig.fullName }}{% else %}[DEPOSITOR_NAME_GOES_HERE]{% endif %}</name>
+            <email_address>{% if journal.extraFields.crossrefConfig is not empty %}{{ journal.extraFields.crossrefConfig.email }}{% else %}[DEPOSITOR_EMAIL_GOES_HERE]{% endif %}</email_address>
         </depositor>
         <registrant>{{ journal.publisher.name }}</registrant>
     </head>

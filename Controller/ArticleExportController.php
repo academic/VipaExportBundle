@@ -7,6 +7,10 @@ use APY\DataGridBundle\Grid\Row;
 use APY\DataGridBundle\Grid\Source\Entity;
 use Ojs\CoreBundle\Controller\OjsController as Controller;
 use Ojs\JournalBundle\Entity\Article;
+use Ojs\JournalBundle\Entity\Journal;
+use Ojs\JournalBundle\Event\JournalEvent;
+use Ojs\JournalBundle\Event\JournalItemEvent;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -176,10 +180,12 @@ class ArticleExportController extends Controller
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journal);
         $dataExport->setArticle($article);
-        $crossrefCrossrefData = $this->renderView('OjsExportBundle:ArticleExport:crossref.xml.twig', [
-            'articles' => [$article],
+
+        $data = $this->setupCrossrefConfigs([
             'journal' => $journal,
+            'articles' => [$article],
         ]);
+        $crossrefCrossrefData = $this->renderView('OjsExportBundle:ArticleExport:crossref.xml.twig', $data);
         $filePath = $dataExport->storeAsFile($crossrefCrossrefData, 'xml', $article->getId());
         $explode = explode('/', $filePath);
         $fileName = end($explode);
@@ -210,10 +216,12 @@ class ArticleExportController extends Controller
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journal);
         $articles = $articleRepo->findById($primaryKeys);
-        $crossrefCrossrefData = $this->renderView('OjsExportBundle:ArticleExport:crossref.xml.twig', [
-            'articles' => $articles,
+
+        $data = $this->setupCrossrefConfigs([
             'journal' => $journal,
+            'articles' => $articles,
         ]);
+        $crossrefCrossrefData = $this->renderView('OjsExportBundle:ArticleExport:crossref.xml.twig', $data);
         $filePath = $dataExport->storeAsFile($crossrefCrossrefData, 'xml', 'articles');
         $explode = explode('/', $filePath);
         $fileName = end($explode);
@@ -223,6 +231,34 @@ class ArticleExportController extends Controller
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
 
         return $response;
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    private function setupCrossrefConfigs($data)
+    {
+        $dispatcher = $this->get('event_dispatcher');
+        $journalEvent = new JournalEvent($data['journal']);
+        $dispatcher->dispatch('get.journal.crossref.config', $journalEvent);
+
+        $articles = [];
+        /** @var Article $article */
+        foreach ($data['articles'] as $article){
+            if(!empty($article->getDoi())){
+                $articles[] = $article;
+                continue;
+            }
+            $articleEvent = new JournalItemEvent($article);
+            $dispatcher->dispatch('generate.article.doi', $articleEvent);
+            $articles[] = $articleEvent->getItem();
+        }
+
+        return [
+            'journal' => $journalEvent->getJournal(),
+            'articles' => $articles,
+        ];
     }
 
     /**
