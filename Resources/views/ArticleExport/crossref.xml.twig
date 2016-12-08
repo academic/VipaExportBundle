@@ -14,7 +14,9 @@
             <journal>
                 <journal_metadata>
                     <full_title>{{ journal.title }}</full_title>
+                    {% if journal.titleAbbr is not empty %}
                     <abbrev_title>{{ journal.titleAbbr }}</abbrev_title>
+                    {% endif %}
                     <issn media_type="electronic">{{ journal.issn }}</issn>
                 </journal_metadata>
                 {% if article.issue is not empty %}
