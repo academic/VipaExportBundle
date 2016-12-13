@@ -36,7 +36,9 @@
                             <volume>{{ article.issue.volume }}</volume>
                         </journal_volume>
                     {% endif %}
-                    <issue>{{ article.issue.title }}</issue>
+                    {% if article.issue.number is not empty %}
+                        <issue>{{ article.issue.number }}</issue>
+                    {% endif %}
                 </journal_issue>
                 {% endif %}
                 <journal_article publication_type="full_text">
