@@ -31,9 +31,11 @@
                         <day>{{ article.issue.datePublished|date('d') }}</day>
                         <year>{{ article.issue.datePublished|date('Y') }}</year>
                     </publication_date>
-                    <journal_volume>
-                        <volume>{{ article.issue.volume }}</volume>
-                    </journal_volume>
+                    {% if article.issue.volume is not empty %}
+                        <journal_volume>
+                            <volume>{{ article.issue.volume }}</volume>
+                        </journal_volume>
+                    {% endif %}
                     <issue>{{ article.issue.title }}</issue>
                 </journal_issue>
                 {% endif %}
@@ -54,14 +56,19 @@
                         <day>{{ article.pubDate|date('d') }}</day>
                         <year>{{ article.pubDate|date('Y') }}</year>
                     </publication_date>
-                    <pages>
-                        {% if article.firstPage is not empty %}
-                            <first_page>{{ article.firstPage }}</first_page>
-                        {% endif %}
-                        {% if article.lastPage is not empty %}
-                            <other_pages>{{ article.lastPage }}</other_pages>
-                        {% endif %}
-                    </pages>
+                    {%
+                        if article.firstPage is not empty
+                        or article.lastPage is not empty
+                    %}
+                        <pages>
+                            {% if article.firstPage is not empty %}
+                                <first_page>{{ article.firstPage }}</first_page>
+                            {% endif %}
+                            {% if article.lastPage is not empty %}
+                                <other_pages>{{ article.lastPage }}</other_pages>
+                            {% endif %}
+                        </pages>
+                    {% endif %}
                     {% if article.doi is not empty %}
                     <doi_data>
                         <doi>{{ article.doi }}</doi>
