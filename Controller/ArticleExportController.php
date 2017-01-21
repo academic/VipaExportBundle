@@ -272,7 +272,7 @@ class ArticleExportController extends Controller
         }
 
         return [
-            'journal' => $journalEvent->getJournal(),
+            'journal' => $journal,
             'articles' => $articles,
             'crossrefJournalTitle' => $crossrefJournalTitle
         ];
