@@ -13,7 +13,13 @@
         {% for article in articles %}
             <journal>
                 <journal_metadata>
-                    <full_title>{{ journal.title }}</full_title>
+                    <full_title>
+                        {% if crossrefJournalTitle is not empty %}
+                            {{ crossrefJournalTitle }}
+                        {% else %}
+                            {{ journal.title }}
+                        {% endif %}
+                    </full_title>
                     {% if journal.titleAbbr is not empty %}
                     <abbrev_title>{{ journal.titleAbbr }}</abbrev_title>
                     {% endif %}

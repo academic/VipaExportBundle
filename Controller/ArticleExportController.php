@@ -5,6 +5,7 @@ namespace Ojs\ExportBundle\Controller;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Row;
 use APY\DataGridBundle\Grid\Source\Entity;
+use GuzzleHttp\Client;
 use Ojs\CoreBundle\Controller\OjsController as Controller;
 use Ojs\JournalBundle\Entity\Article;
 use Ojs\JournalBundle\Entity\Journal;
@@ -255,9 +256,25 @@ class ArticleExportController extends Controller
             $articles[] = $articleEvent->getItem();
         }
 
+        $journal = $journalEvent->getJournal();
+
+        $crossrefJournalTitle = '';
+
+        if ($journal->getIssn()){
+            try {
+                $client = new Client();
+                $response = $client->get('http://api.crossref.org/journals/'. $journal->getIssn());
+                $crossrefJournal = json_decode($response->getBody()->getContents(), true);
+                $crossrefJournalTitle = $crossrefJournal['message']['title'];
+            } catch(\Exception $e) {
+                $crossrefJournalTitle = '';
+            }
+        }
+
         return [
-            'journal' => $journalEvent->getJournal(),
+            'journal' => $journal,
             'articles' => $articles,
+            'crossrefJournalTitle' => $crossrefJournalTitle
         ];
     }
 
