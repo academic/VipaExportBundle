@@ -3,17 +3,19 @@
     <head>
         <doi_batch_id>article_{{ (articles|first).id }}_{{ date().timestamp }}</doi_batch_id>
         <timestamp>{{ date().timestamp }}</timestamp>
-        <depositor>
-            <name>{% if journal.extraFields.crossrefConfig is not empty %}{{ journal.extraFields.crossrefConfig.fullName }}{% else %}[DEPOSITOR_NAME_GOES_HERE]{% endif %}</name>
-            <email_address>{% if journal.extraFields.crossrefConfig is not empty %}{{ journal.extraFields.crossrefConfig.email }}{% else %}[DEPOSITOR_EMAIL_GOES_HERE]{% endif %}</email_address>
-        </depositor>
         <registrant>{{ journal.publisher.name }}</registrant>
     </head>
     <body>
         {% for article in articles %}
             <journal>
                 <journal_metadata>
-                    <full_title>{{ journal.title }}</full_title>
+                    <full_title>
+                        {% if crossrefJournalTitle is not empty %}
+                            {{ crossrefJournalTitle }}
+                        {% else %}
+                            {{ journal.title }}
+                        {% endif %}
+                    </full_title>
                     {% if journal.titleAbbr is not empty %}
                     <abbrev_title>{{ journal.titleAbbr }}</abbrev_title>
                     {% endif %}
