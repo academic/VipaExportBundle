@@ -1,11 +1,11 @@
 <?php
 
-namespace Ojs\ExportBundle\Controller;
+namespace Vipa\ExportBundle\Controller;
 
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Source\Entity;
-use Ojs\CoreBundle\Controller\OjsController as Controller;
-use Ojs\JournalBundle\Entity\JournalUser;
+use Vipa\CoreBundle\Controller\VipaController as Controller;
+use Vipa\JournalBundle\Entity\JournalUser;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ class UserExportController extends Controller
     {
         $translator = $this->get('translator');
         $grid = $this->get('grid');
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
+        $journal = $this->get('vipa.journal_service')->getSelectedJournal();
         $source = new Entity(JournalUser::class, 'export');
         $grid->setSource($source);
 
@@ -43,7 +43,7 @@ class UserExportController extends Controller
         $actionColumn->setRowActions($rowAction);
         $grid->addColumn($actionColumn);
 
-        return $grid->getGridResponse('OjsExportBundle:UserExport:index.html.twig', [
+        return $grid->getGridResponse('VipaExportBundle:UserExport:index.html.twig', [
             'grid'      => $grid,
             'journal'   => $journal,
         ]);
@@ -55,7 +55,7 @@ class UserExportController extends Controller
      */
     public function singleUserJsonAction(JournalUser $user)
     {
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($user->getJournal());
         $dataExport->setUser($user);
         $jsonUserData = $dataExport->userToJson();
@@ -76,16 +76,16 @@ class UserExportController extends Controller
      */
     public function massUserJson($primaryKeys)
     {
-        $journalService = $this->get('ojs.journal_service');
+        $journalService = $this->get('vipa.journal_service');
         if(count($primaryKeys) < 1){
             $this->errorFlashBag('you.must.select.one.least.element');
-            return $this->redirectToRoute('ojs_data_export_user', [
+            return $this->redirectToRoute('vipa_data_export_user', [
                 'journalId' => $journalService->getSelectedJournal()->getId(),
             ]);
         }
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository(JournalUser::class);
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setUsers($userRepo->findById($primaryKeys));
         $jsonUsersData = $dataExport->usersToJson();
@@ -106,7 +106,7 @@ class UserExportController extends Controller
      */
     public function singleUserXmlAction(JournalUser $user)
     {
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($user->getJournal());
         $dataExport->setUser($user);
         $xmlUserData = $dataExport->userToXml();
@@ -127,16 +127,16 @@ class UserExportController extends Controller
      */
     public function massUserXml($primaryKeys = [])
     {
-        $journalService = $this->get('ojs.journal_service');
+        $journalService = $this->get('vipa.journal_service');
         if(count($primaryKeys) < 1){
             $this->errorFlashBag('you.must.select.one.least.element');
-            return $this->redirectToRoute('ojs_data_export_user', [
+            return $this->redirectToRoute('vipa_data_export_user', [
                 'journalId' => $journalService->getSelectedJournal()->getId(),
             ]);
         }
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository(JournalUser::class);
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setUsers($userRepo->findById($primaryKeys));
         $jsonUsersData = $dataExport->usersToXml();

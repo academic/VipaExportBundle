@@ -1,6 +1,6 @@
 <?php
 
-namespace Ojs\ExportBundle\Service\Twig;
+namespace Vipa\ExportBundle\Service\Twig;
 
 use Symfony\Component\Routing\RouterInterface;
 

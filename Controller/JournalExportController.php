@@ -1,10 +1,10 @@
 <?php
 
-namespace Ojs\ExportBundle\Controller;
+namespace Vipa\ExportBundle\Controller;
 
-use Ojs\CoreBundle\Controller\OjsController as Controller;
-use Ojs\CoreBundle\Params\ArticleStatuses;
-use Ojs\JournalBundle\Entity\Article;
+use Vipa\CoreBundle\Controller\VipaController as Controller;
+use Vipa\CoreBundle\Params\ArticleStatuses;
+use Vipa\JournalBundle\Entity\Article;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -16,7 +16,7 @@ class JournalExportController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('OjsExportBundle:JournalExport:index.html.twig');
+        return $this->render('VipaExportBundle:JournalExport:index.html.twig');
     }
 
     /**
@@ -24,8 +24,8 @@ class JournalExportController extends Controller
      */
     public function jsonAction()
     {
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
-        $dataExport = $this->get('ojs.data_export');
+        $journal = $this->get('vipa.journal_service')->getSelectedJournal();
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journal);
         $jsonJournalData = $dataExport->journalToJson();
         $filePath = $dataExport->storeAsFile($jsonJournalData, 'json', $journal->getId());
@@ -44,8 +44,8 @@ class JournalExportController extends Controller
      */
     public function xmlAction()
     {
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
-        $dataExport = $this->get('ojs.data_export');
+        $journal = $this->get('vipa.journal_service')->getSelectedJournal();
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journal);
         $xmlJournalData = $dataExport->journalToXml();
         $filePath = $dataExport->storeAsFile($xmlJournalData, 'xml', $journal->getId());
@@ -65,13 +65,13 @@ class JournalExportController extends Controller
     public function doajAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
-        $dataExport = $this->get('ojs.data_export');
+        $journal = $this->get('vipa.journal_service')->getSelectedJournal();
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journal);
         $articles = $em->getRepository(Article::class)->findBy([
             'status' => ArticleStatuses::STATUS_PUBLISHED,
         ]);
-        $doajJournalData = $this->renderView('OjsExportBundle:JournalExport:doaj.xml.twig', [
+        $doajJournalData = $this->renderView('VipaExportBundle:JournalExport:doaj.xml.twig', [
             'articles' => $articles,
         ]);
         $filePath = $dataExport->storeAsFile($doajJournalData, 'xml', $journal->getId());

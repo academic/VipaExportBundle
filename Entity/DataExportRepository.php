@@ -1,6 +1,6 @@
 <?php
 
-namespace Ojs\ExportBundle\Entity;
+namespace Vipa\ExportBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

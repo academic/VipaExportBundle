@@ -1,15 +1,15 @@
 <?php
 
-namespace Ojs\ExportBundle\Entity;
+namespace Vipa\ExportBundle\Entity;
 
 use APY\DataGridBundle\Grid\Mapping as GRID;
-use Ojs\JournalBundle\Entity\Journal;
-use Ojs\JournalBundle\Entity\JournalItemInterface;
+use Vipa\JournalBundle\Entity\Journal;
+use Vipa\JournalBundle\Entity\JournalItemInterface;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 
 /**
  * Class DataExport
- * @package Ojs\DataBundle\Entity
+ * @package Vipa\DataBundle\Entity
  * @GRID\Source(columns="id, type, createdAt")
  */
 class DataExport implements JournalItemInterface

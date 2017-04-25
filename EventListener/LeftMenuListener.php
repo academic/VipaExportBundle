@@ -1,11 +1,11 @@
 <?php
 
-namespace Ojs\ExportBundle\EventListener;
+namespace Vipa\ExportBundle\EventListener;
 
-use Ojs\CoreBundle\Acl\AuthorizationChecker;
-use Ojs\JournalBundle\Event\MenuEvent;
-use Ojs\JournalBundle\Event\MenuEvents;
-use Ojs\JournalBundle\Service\JournalService;
+use Vipa\CoreBundle\Acl\AuthorizationChecker;
+use Vipa\JournalBundle\Event\MenuEvent;
+use Vipa\JournalBundle\Event\MenuEvents;
+use Vipa\JournalBundle\Service\JournalService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -60,7 +60,7 @@ class LeftMenuListener implements EventSubscriberInterface
             $menuItem->addChild(
                 'title.export',
                 [
-                    'route' => 'ojs_data_export',
+                    'route' => 'vipa_data_export',
                     'extras' => [
                         'icon' => 'download'
                     ],

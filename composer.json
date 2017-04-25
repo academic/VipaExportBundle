@@ -1,5 +1,5 @@
 {
-  "name": "ojs/export-bundle",
+  "name": "vipa/export-bundle",
   "description": "Data export bundle for OJS",
   "type": "symfony-bundle",
   "keywords": [
@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Ojs\\ExportBundle\\": ""
+      "Vipa\\ExportBundle\\": ""
     }
   }
 }

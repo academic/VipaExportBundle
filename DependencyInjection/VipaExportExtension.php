@@ -1,6 +1,6 @@
 <?php
 
-namespace Ojs\ExportBundle\DependencyInjection;
+namespace Vipa\ExportBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class OjsExportExtension extends Extension
+class VipaExportExtension extends Extension
 {
     /**
      * {@inheritdoc}

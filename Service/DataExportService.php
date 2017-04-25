@@ -1,21 +1,21 @@
 <?php
 
-namespace Ojs\ExportBundle\Service;
+namespace Vipa\ExportBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
-use Ojs\CoreBundle\Helper\FileHelper;
-use Ojs\JournalBundle\Entity\Article;
-use Ojs\JournalBundle\Entity\Issue;
-use Ojs\JournalBundle\Entity\Journal;
+use Vipa\CoreBundle\Helper\FileHelper;
+use Vipa\JournalBundle\Entity\Article;
+use Vipa\JournalBundle\Entity\Issue;
+use Vipa\JournalBundle\Entity\Journal;
 use JMS\Serializer\Serializer;
-use Ojs\ExportBundle\Entity\DataExport;
-use Ojs\JournalBundle\Entity\JournalUser;
+use Vipa\ExportBundle\Entity\DataExport;
+use Vipa\JournalBundle\Entity\JournalUser;
 
 /**
  * Class DataExportService
- * @package Ojs\ExportBundle\Service
+ * @package Vipa\ExportBundle\Service
  */
 class DataExportService
 {
@@ -192,7 +192,7 @@ class DataExportService
         if($this->article === null){
             throw new \LogicException('You must to specify article param');
         }
-        return $this->twig->render("OjsExportBundle:ArticleExport:article.xml.twig", [
+        return $this->twig->render("VipaExportBundle:ArticleExport:article.xml.twig", [
             'articles' => [$this->article],
         ]);
     }
@@ -205,7 +205,7 @@ class DataExportService
         if($this->articles === []){
             throw new \LogicException('You must to specify articles param');
         }
-        return $this->twig->render("OjsExportBundle:ArticleExport:article.xml.twig", [
+        return $this->twig->render("VipaExportBundle:ArticleExport:article.xml.twig", [
             'articles' => $this->articles,
         ]);
     }

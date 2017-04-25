@@ -1,12 +1,12 @@
 <?php
 
-namespace Ojs\ExportBundle\Controller;
+namespace Vipa\ExportBundle\Controller;
 
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Row;
 use APY\DataGridBundle\Grid\Source\Entity;
-use Ojs\CoreBundle\Controller\OjsController as Controller;
-use Ojs\JournalBundle\Entity\Issue;
+use Vipa\CoreBundle\Controller\VipaController as Controller;
+use Vipa\JournalBundle\Entity\Issue;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class IssueExportController extends Controller
     {
         $translator = $this->get('translator');
         $grid = $this->get('grid');
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
+        $journal = $this->get('vipa.journal_service')->getSelectedJournal();
         $source = new Entity(Issue::class, 'export');
         $grid->setSource($source);
 
@@ -45,7 +45,7 @@ class IssueExportController extends Controller
         $actionColumn->setRowActions($rowAction);
         $grid->addColumn($actionColumn);
 
-        return $grid->getGridResponse('OjsExportBundle:IssueExport:index.html.twig', [
+        return $grid->getGridResponse('VipaExportBundle:IssueExport:index.html.twig', [
             'grid'      => $grid,
             'journal'   => $journal,
         ]);
@@ -58,7 +58,7 @@ class IssueExportController extends Controller
      */
     public function singleIssueJsonAction(Request $request, Issue $issue)
     {
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($issue->getJournal());
         $dataExport->setIssue($issue);
         $jsonIssueData = $dataExport->issueToJson();
@@ -79,16 +79,16 @@ class IssueExportController extends Controller
      */
     public function massIssueJson($primaryKeys)
     {
-        $journalService = $this->get('ojs.journal_service');
+        $journalService = $this->get('vipa.journal_service');
         if(count($primaryKeys) < 1){
             $this->errorFlashBag('you.must.select.one.least.element');
-            return $this->redirectToRoute('ojs_data_export_user', [
+            return $this->redirectToRoute('vipa_data_export_user', [
                 'journalId' => $journalService->getSelectedJournal()->getId(),
             ]);
         }
         $em = $this->getDoctrine()->getManager();
         $issueRepo = $em->getRepository(Issue::class);
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setIssues($issueRepo->findById($primaryKeys));
         $jsonIssuesData = $dataExport->issuesToJson();
@@ -110,7 +110,7 @@ class IssueExportController extends Controller
      */
     public function singleIssueXmlAction(Request $request, Issue $issue)
     {
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($issue->getJournal());
         $dataExport->setIssue($issue);
         $xmlIssueData = $dataExport->issueToXml();
@@ -131,16 +131,16 @@ class IssueExportController extends Controller
      */
     public function massIssueXml($primaryKeys)
     {
-        $journalService = $this->get('ojs.journal_service');
+        $journalService = $this->get('vipa.journal_service');
         if(count($primaryKeys) < 1){
             $this->errorFlashBag('you.must.select.one.least.element');
-            return $this->redirectToRoute('ojs_data_export_user', [
+            return $this->redirectToRoute('vipa_data_export_user', [
                 'journalId' => $journalService->getSelectedJournal()->getId(),
             ]);
         }
         $em = $this->getDoctrine()->getManager();
         $issueRepo = $em->getRepository(Issue::class);
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setIssues($issueRepo->findById($primaryKeys));
         $jsonIssuesData = $dataExport->issuesToXml();

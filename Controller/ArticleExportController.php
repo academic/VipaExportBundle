@@ -1,16 +1,16 @@
 <?php
 
-namespace Ojs\ExportBundle\Controller;
+namespace Vipa\ExportBundle\Controller;
 
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Row;
 use APY\DataGridBundle\Grid\Source\Entity;
 use GuzzleHttp\Client;
-use Ojs\CoreBundle\Controller\OjsController as Controller;
-use Ojs\JournalBundle\Entity\Article;
-use Ojs\JournalBundle\Entity\Journal;
-use Ojs\JournalBundle\Event\JournalEvent;
-use Ojs\JournalBundle\Event\JournalItemEvent;
+use Vipa\CoreBundle\Controller\VipaController as Controller;
+use Vipa\JournalBundle\Entity\Article;
+use Vipa\JournalBundle\Entity\Journal;
+use Vipa\JournalBundle\Event\JournalEvent;
+use Vipa\JournalBundle\Event\JournalItemEvent;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,7 +60,7 @@ class ArticleExportController extends Controller
         $actionColumn->setRowActions($rowAction);
         $grid->addColumn($actionColumn);
 
-        return $grid->getGridResponse('OjsExportBundle:ArticleExport:index.html.twig', [
+        return $grid->getGridResponse('VipaExportBundle:ArticleExport:index.html.twig', [
             'grid'      => $grid,
             'journal'   => $journal,
         ]);
@@ -186,7 +186,7 @@ class ArticleExportController extends Controller
             'journal' => $journal,
             'articles' => [$article],
         ]);
-        $crossrefCrossrefData = $this->renderView('OjsExportBundle:ArticleExport:crossref.xml.twig', $data);
+        $crossrefCrossrefData = $this->renderView('VipaExportBundle:ArticleExport:crossref.xml.twig', $data);
         $filePath = $dataExport->storeAsFile($crossrefCrossrefData, 'xml', $article->getId());
         $explode = explode('/', $filePath);
         $fileName = end($explode);
@@ -222,7 +222,7 @@ class ArticleExportController extends Controller
             'journal' => $journal,
             'articles' => $articles,
         ]);
-        $crossrefCrossrefData = $this->renderView('OjsExportBundle:ArticleExport:crossref.xml.twig', $data);
+        $crossrefCrossrefData = $this->renderView('VipaExportBundle:ArticleExport:crossref.xml.twig', $data);
         $filePath = $dataExport->storeAsFile($crossrefCrossrefData, 'xml', 'articles');
         $explode = explode('/', $filePath);
         $fileName = end($explode);
@@ -289,7 +289,7 @@ class ArticleExportController extends Controller
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journal);
         $dataExport->setArticle($article);
-        $articlePubmedData = $this->renderView('OjsExportBundle:ArticleExport:pubmed.xml.twig', [
+        $articlePubmedData = $this->renderView('VipaExportBundle:ArticleExport:pubmed.xml.twig', [
             'articles' => [$article],
             'journal' => $journal,
         ]);
@@ -323,7 +323,7 @@ class ArticleExportController extends Controller
         $dataExport = $this->get('ojs.data_export');
         $dataExport->setJournal($journal);
         $articles = $articleRepo->findById($primaryKeys);
-        $articlePubmedData = $this->renderView('OjsExportBundle:ArticleExport:pubmed.xml.twig', [
+        $articlePubmedData = $this->renderView('VipaExportBundle:ArticleExport:pubmed.xml.twig', [
             'articles' => $articles,
             'journal' => $journal,
         ]);

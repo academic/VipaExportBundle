@@ -1,13 +1,13 @@
 <?php
 
-namespace Ojs\ExportBundle\Service;
+namespace Vipa\ExportBundle\Service;
 
 use APY\DataGridBundle\Grid\Action\RowAction;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class ExportGridAction
- * @package Ojs\ExportBundle\Service
+ * @package Vipa\ExportBundle\Service
  */
 class ExportGridAction
 {
@@ -35,7 +35,7 @@ class ExportGridAction
             [
                 'class' => 'btn btn-primary btn-xs ',
                 'data-toggle' => 'tooltip',
-                'title' => $this->translator->trans('ojs.export_download'),
+                'title' => $this->translator->trans('vipa.export_download'),
             ]
         );
         $rowAction->setTarget('_blank');
@@ -50,7 +50,7 @@ class ExportGridAction
      */
     public function exportSingleArticleAsJson($journalId)
     {
-        $rowAction = new RowAction('JSON', 'ojs_data_export_single_article_json');
+        $rowAction = new RowAction('JSON', 'vipa_data_export_single_article_json');
         $rowAction->setAttributes(
             [
                 'class' => 'btn btn-primary btn-xs ',
@@ -69,7 +69,7 @@ class ExportGridAction
      */
     public function exportSingleArticleAsXml($journalId)
     {
-        $rowAction = new RowAction('XML', 'ojs_data_export_single_article_xml');
+        $rowAction = new RowAction('XML', 'vipa_data_export_single_article_xml');
         $rowAction->setAttributes(
             [
                 'class' => 'btn btn-warning btn-xs ',
@@ -88,7 +88,7 @@ class ExportGridAction
      */
     public function exportSingleArticleAsCrossref($journalId)
     {
-        $rowAction = new RowAction('CrossRef', 'ojs_data_export_single_article_crossref');
+        $rowAction = new RowAction('CrossRef', 'vipa_data_export_single_article_crossref');
         $rowAction->setAttributes(
             [
                 'class' => 'btn btn-info btn-xs ',
@@ -107,7 +107,7 @@ class ExportGridAction
      */
     public function exportSingleArticleAsPubmed($journalId)
     {
-        $rowAction = new RowAction('Pubmed', 'ojs_data_export_single_article_pubmed');
+        $rowAction = new RowAction('Pubmed', 'vipa_data_export_single_article_pubmed');
         $rowAction->setAttributes(
             [
                 'class' => 'btn btn-success btn-xs ',
@@ -126,7 +126,7 @@ class ExportGridAction
      */
     public function exportSingleIssueAsJson($journalId)
     {
-        $rowAction = new RowAction('JSON', 'ojs_data_export_single_issue_json');
+        $rowAction = new RowAction('JSON', 'vipa_data_export_single_issue_json');
         $rowAction->setAttributes(
             [
                 'class' => 'btn btn-primary btn-xs ',
@@ -145,7 +145,7 @@ class ExportGridAction
      */
     public function exportSingleIssueAsXml($journalId)
     {
-        $rowAction = new RowAction('XML', 'ojs_data_export_single_issue_xml');
+        $rowAction = new RowAction('XML', 'vipa_data_export_single_issue_xml');
         $rowAction->setAttributes(
             [
                 'class' => 'btn btn-warning btn-xs ',
@@ -164,7 +164,7 @@ class ExportGridAction
      */
     public function exportSingleUserAsJson($journalId)
     {
-        $rowAction = new RowAction('JSON', 'ojs_data_export_single_user_json');
+        $rowAction = new RowAction('JSON', 'vipa_data_export_single_user_json');
         $rowAction->setAttributes(
             [
                 'class' => 'btn btn-primary btn-xs ',
@@ -183,7 +183,7 @@ class ExportGridAction
      */
     public function exportSingleUserAsXml($journalId)
     {
-        $rowAction = new RowAction('XML', 'ojs_data_export_single_user_xml');
+        $rowAction = new RowAction('XML', 'vipa_data_export_single_user_xml');
         $rowAction->setAttributes(
             [
                 'class' => 'btn btn-warning btn-xs ',
