@@ -1,15 +1,15 @@
-ojs_data_export_journal:
+vipa_data_export_journal:
   path:     /
-  defaults: { _controller: "OjsExportBundle:JournalExport:index" }
+  defaults: { _controller: "VipaExportBundle:JournalExport:index" }
 
-ojs_data_export_journal_json:
+vipa_data_export_journal_json:
     path:     /json
-    defaults: { _controller: "OjsExportBundle:JournalExport:json" }
+    defaults: { _controller: "VipaExportBundle:JournalExport:json" }
 
-ojs_data_export_journal_xml:
+vipa_data_export_journal_xml:
     path:     /xml
-    defaults: { _controller: "OjsExportBundle:JournalExport:xml" }
+    defaults: { _controller: "VipaExportBundle:JournalExport:xml" }
 
-ojs_data_export_journal_doaj:
+vipa_data_export_journal_doaj:
     path:     /doaj
-    defaults: { _controller: "OjsExportBundle:JournalExport:doaj" }
+    defaults: { _controller: "VipaExportBundle:JournalExport:doaj" }

@@ -1,7 +1,7 @@
-Ojs\ExportBundle\Entity\DataExport:
+Vipa\ExportBundle\Entity\DataExport:
     type: entity
     table: data_export
-    repositoryClass: Ojs\ExportBundle\Entity\DataExportRepository
+    repositoryClass: Vipa\ExportBundle\Entity\DataExportRepository
     cache:
         usage: NONSTRICT_READ_WRITE
     id:
@@ -12,7 +12,7 @@ Ojs\ExportBundle\Entity\DataExport:
                 strategy: AUTO
     manyToOne:
           journal:
-                targetEntity: Ojs\JournalBundle\Entity\Journal
+                targetEntity: Vipa\JournalBundle\Entity\Journal
                 joinColumn:
                   name: journal_id
                   referencedColumnName: id

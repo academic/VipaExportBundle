@@ -1,23 +1,23 @@
-ojs_data_export:
+vipa_data_export:
   path:     /journal/{journalId}/export
-  defaults: { _controller: "OjsExportBundle:Export:index" }
+  defaults: { _controller: "VipaExportBundle:Export:index" }
 
-ojs_data_export_download:
+vipa_data_export_download:
   path:     /journal/{journalId}/export/{id}/download
-  defaults: { _controller: "OjsExportBundle:Export:download" }
+  defaults: { _controller: "VipaExportBundle:Export:download" }
 
-ojs_data_export_article:
+vipa_data_export_article:
   resource: routing/Export/article.yml
   prefix:     /journal/{journalId}/export/article
 
-ojs_data_export_issue:
+vipa_data_export_issue:
   resource: routing/Export/issue.yml
   prefix:     /journal/{journalId}/export/issue
 
-ojs_data_export_journal:
+vipa_data_export_journal:
   resource: routing/Export/journal.yml
   prefix:     /journal/{journalId}/export/journal
 
-ojs_data_export_user:
+vipa_data_export_user:
   resource: routing/Export/user.yml
   prefix:     /journal/{journalId}/export/user

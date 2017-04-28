@@ -32,7 +32,7 @@
                 {% endfor %}
             </affiliationsList>
             <abstract language="{{ doajLanguageTransform(article.journal.mandatoryLang.code) }}">{{ article.abstract }}</abstract>
-            <fullTextUrl format="html">{{ path('ojs_article_page', {
+            <fullTextUrl format="html">{{ path('vipa_article_page', {
                     publisher: article.journal.publisher.slug,
                     slug: article.journal.slug,
                     issue_id: article.issue.id,

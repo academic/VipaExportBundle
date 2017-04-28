@@ -1,11 +1,11 @@
-ojs_data_export_user:
+vipa_data_export_user:
   path:     /
-  defaults: { _controller: "OjsExportBundle:UserExport:index" }
+  defaults: { _controller: "VipaExportBundle:UserExport:index" }
 
-ojs_data_export_single_user_json:
+vipa_data_export_single_user_json:
   path:     /{id}/json
-  defaults: { _controller: "OjsExportBundle:UserExport:singleUserJson" }
+  defaults: { _controller: "VipaExportBundle:UserExport:singleUserJson" }
 
-ojs_data_export_single_user_xml:
+vipa_data_export_single_user_xml:
   path:     /{id}/xml
-  defaults: { _controller: "OjsExportBundle:UserExport:singleUserXml" }
+  defaults: { _controller: "VipaExportBundle:UserExport:singleUserXml" }

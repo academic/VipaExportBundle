@@ -1,19 +1,19 @@
-ojs_data_export_article:
+vipa_data_export_article:
   path:     /
-  defaults: { _controller: "OjsExportBundle:ArticleExport:index" }
+  defaults: { _controller: "VipaExportBundle:ArticleExport:index" }
 
-ojs_data_export_single_article_json:
+vipa_data_export_single_article_json:
   path:     /{id}/json
-  defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticleJson" }
+  defaults: { _controller: "VipaExportBundle:ArticleExport:singleArticleJson" }
 
-ojs_data_export_single_article_xml:
+vipa_data_export_single_article_xml:
   path:     /{id}/xml
-  defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticleXml" }
+  defaults: { _controller: "VipaExportBundle:ArticleExport:singleArticleXml" }
 
-ojs_data_export_single_article_crossref:
+vipa_data_export_single_article_crossref:
   path:     /{id}/crossref
-  defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticleCrossref" }
+  defaults: { _controller: "VipaExportBundle:ArticleExport:singleArticleCrossref" }
 
-ojs_data_export_single_article_pubmed:
+vipa_data_export_single_article_pubmed:
   path:     /{id}/pubmed
-  defaults: { _controller: "OjsExportBundle:ArticleExport:singleArticlePubmed" }
+  defaults: { _controller: "VipaExportBundle:ArticleExport:singleArticlePubmed" }

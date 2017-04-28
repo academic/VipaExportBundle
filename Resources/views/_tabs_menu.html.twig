@@ -1,26 +1,26 @@
 <ul class="nav nav-tabs">
     <li {% if active == 1 %}class="active"{% endif %}>
-        <a href="{{ path('ojs_data_export', {journalId: selectedJournal().id}) }}">
+        <a href="{{ path('vipa_data_export', {journalId: selectedJournal().id}) }}">
             {{ "export.history"|trans }}
         </a>
     </li>
     <li {% if active == 2 %}class="active"{% endif %}>
-        <a href="{{ path('ojs_data_export_article', {journalId: selectedJournal().id}) }}">
+        <a href="{{ path('vipa_data_export_article', {journalId: selectedJournal().id}) }}">
             {{ "article.export"|trans }}
         </a>
     </li>
     <li {% if active == 3 %}class="active"{% endif %}>
-        <a href="{{ path('ojs_data_export_issue', {journalId: selectedJournal().id}) }}">
+        <a href="{{ path('vipa_data_export_issue', {journalId: selectedJournal().id}) }}">
             {{ "issue.export"|trans }}
         </a>
     </li>
     <li {% if active == 4 %}class="active"{% endif %}>
-        <a href="{{ path('ojs_data_export_journal', {journalId: selectedJournal().id}) }}">
+        <a href="{{ path('vipa_data_export_journal', {journalId: selectedJournal().id}) }}">
             {{ "journal.export"|trans }}
         </a>
     </li>
     <li {% if active == 5 %}class="active"{% endif %}>
-        <a href="{{ path('ojs_data_export_user', {journalId: selectedJournal().id}) }}">
+        <a href="{{ path('vipa_data_export_user', {journalId: selectedJournal().id}) }}">
             {{ "user.export"|trans }}
         </a>
     </li>

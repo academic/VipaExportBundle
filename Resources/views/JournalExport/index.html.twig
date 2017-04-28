@@ -1,9 +1,9 @@
-{% extends '::ojsbase.html.twig' %}
+{% extends '::vipabase.html.twig' %}
 {% block title %}{{ 'title.export'|trans }} {{ parent() }}{% endblock %}
 
 {% block breadcrumb %}
     {% set list = [
-    {'link': path('ojs_journal_dashboard_index', {journalId: selectedJournal().id}), 'title': 'dashboard'|trans},
+    {'link': path('vipa_journal_dashboard_index', {journalId: selectedJournal().id}), 'title': 'dashboard'|trans},
     {'title': 'title.export'|trans}
     ] %}
     {{ breadcrumb(list) }}
@@ -13,21 +13,21 @@
     <h2>{{ 'title.export'|trans }}</h2>
 
     {% include '::flashbag.html.twig' %}
-    {{ include('OjsExportBundle::_tabs_menu.html.twig', {active: 4}) }}
+    {{ include('VipaExportBundle::_tabs_menu.html.twig', {active: 4}) }}
 
     <div class="well col-sm-12">
         <div class="col-sm-4">
-            <a class="btn btn-primary" href="{{ path('ojs_data_export_journal_json', {journalId: selectedJournal().id}) }}" target="_blank">
+            <a class="btn btn-primary" href="{{ path('vipa_data_export_journal_json', {journalId: selectedJournal().id}) }}" target="_blank">
                 {{ 'export.as.json'|trans }}
             </a>
         </div>
         <div class="col-sm-4">
-            <a class="btn btn-primary" href="{{ path('ojs_data_export_journal_xml', {journalId: selectedJournal().id}) }}" target="_blank">
+            <a class="btn btn-primary" href="{{ path('vipa_data_export_journal_xml', {journalId: selectedJournal().id}) }}" target="_blank">
                 {{ 'export.as.xml'|trans }}
             </a>
         </div>
         <div class="col-sm-4">
-            <a class="btn btn-primary" href="{{ path('ojs_data_export_journal_doaj', {journalId: selectedJournal().id}) }}" target="_blank">
+            <a class="btn btn-primary" href="{{ path('vipa_data_export_journal_doaj', {journalId: selectedJournal().id}) }}" target="_blank">
                 {{ 'export.as.doaj'|trans }}
             </a>
         </div>

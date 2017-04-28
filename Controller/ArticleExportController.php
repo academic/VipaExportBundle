@@ -28,7 +28,7 @@ class ArticleExportController extends Controller
     {
         $translator = $this->get('translator');
         $grid = $this->get('grid');
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
+        $journal = $this->get('vipa.journal_service')->getSelectedJournal();
         $source = new Entity(Article::class, 'export');
         $grid->setSource($source);
 
@@ -73,7 +73,7 @@ class ArticleExportController extends Controller
      */
     public function singleArticleJsonAction(Request $request, Article $article)
     {
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($article->getJournal());
         $dataExport->setArticle($article);
         $jsonArticleData = $dataExport->articleToJson();
@@ -94,16 +94,16 @@ class ArticleExportController extends Controller
      */
     public function massArticleJson($primaryKeys)
     {
-        $journalService = $this->get('ojs.journal_service');
+        $journalService = $this->get('vipa.journal_service');
         if(count($primaryKeys) < 1){
             $this->errorFlashBag('you.must.select.one.least.element');
-            return $this->redirectToRoute('ojs_data_export_user', [
+            return $this->redirectToRoute('vipa_data_export_user', [
                 'journalId' => $journalService->getSelectedJournal()->getId(),
             ]);
         }
         $em = $this->getDoctrine()->getManager();
         $articleRepo = $em->getRepository(Article::class);
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setArticles($articleRepo->findById($primaryKeys));
         $jsonArticlesData = $dataExport->articlesToJson();
@@ -125,7 +125,7 @@ class ArticleExportController extends Controller
      */
     public function singleArticleXmlAction(Request $request, Article $article)
     {
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($article->getJournal());
         $dataExport->setArticle($article);
         $xmlArticleData = $dataExport->articleToXml();
@@ -146,16 +146,16 @@ class ArticleExportController extends Controller
      */
     public function massArticleXml($primaryKeys)
     {
-        $journalService = $this->get('ojs.journal_service');
+        $journalService = $this->get('vipa.journal_service');
         if(count($primaryKeys) < 1){
             $this->errorFlashBag('you.must.select.one.least.element');
-            return $this->redirectToRoute('ojs_data_export_user', [
+            return $this->redirectToRoute('vipa_data_export_user', [
                 'journalId' => $journalService->getSelectedJournal()->getId(),
             ]);
         }
         $em = $this->getDoctrine()->getManager();
         $articleRepo = $em->getRepository(Article::class);
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journalService->getSelectedJournal());
         $dataExport->setArticles($articleRepo->findById($primaryKeys));
         $jsonArticlesData = $dataExport->articlesToXml();
@@ -177,8 +177,8 @@ class ArticleExportController extends Controller
      */
     public function singleArticleCrossrefAction(Request $request, Article $article)
     {
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
-        $dataExport = $this->get('ojs.data_export');
+        $journal = $this->get('vipa.journal_service')->getSelectedJournal();
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journal);
         $dataExport->setArticle($article);
 
@@ -204,17 +204,17 @@ class ArticleExportController extends Controller
      */
     public function massArticleCrossref($primaryKeys)
     {
-        $journalService = $this->get('ojs.journal_service');
+        $journalService = $this->get('vipa.journal_service');
         if(count($primaryKeys) < 1){
             $this->errorFlashBag('you.must.select.one.least.element');
-            return $this->redirectToRoute('ojs_data_export_user', [
+            return $this->redirectToRoute('vipa_data_export_user', [
                 'journalId' => $journalService->getSelectedJournal()->getId(),
             ]);
         }
         $em = $this->getDoctrine()->getManager();
         $articleRepo = $em->getRepository(Article::class);
         $journal = $journalService->getSelectedJournal();
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journal);
         $articles = $articleRepo->findById($primaryKeys);
 
@@ -285,8 +285,8 @@ class ArticleExportController extends Controller
      */
     public function singleArticlePubmedAction(Request $request, Article $article)
     {
-        $journal = $this->get('ojs.journal_service')->getSelectedJournal();
-        $dataExport = $this->get('ojs.data_export');
+        $journal = $this->get('vipa.journal_service')->getSelectedJournal();
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journal);
         $dataExport->setArticle($article);
         $articlePubmedData = $this->renderView('VipaExportBundle:ArticleExport:pubmed.xml.twig', [
@@ -310,17 +310,17 @@ class ArticleExportController extends Controller
      */
     public function massArticlePubmed($primaryKeys)
     {
-        $journalService = $this->get('ojs.journal_service');
+        $journalService = $this->get('vipa.journal_service');
         if(count($primaryKeys) < 1){
             $this->errorFlashBag('you.must.select.one.least.element');
-            return $this->redirectToRoute('ojs_data_export_user', [
+            return $this->redirectToRoute('vipa_data_export_user', [
                 'journalId' => $journalService->getSelectedJournal()->getId(),
             ]);
         }
         $em = $this->getDoctrine()->getManager();
         $articleRepo = $em->getRepository(Article::class);
         $journal = $journalService->getSelectedJournal();
-        $dataExport = $this->get('ojs.data_export');
+        $dataExport = $this->get('vipa.data_export');
         $dataExport->setJournal($journal);
         $articles = $articleRepo->findById($primaryKeys);
         $articlePubmedData = $this->renderView('VipaExportBundle:ArticleExport:pubmed.xml.twig', [

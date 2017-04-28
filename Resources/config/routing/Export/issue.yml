@@ -1,11 +1,11 @@
-ojs_data_export_issue:
+vipa_data_export_issue:
   path:     /
-  defaults: { _controller: "OjsExportBundle:IssueExport:index" }
+  defaults: { _controller: "VipaExportBundle:IssueExport:index" }
 
-ojs_data_export_single_issue_json:
+vipa_data_export_single_issue_json:
   path:     /{id}/json
-  defaults: { _controller: "OjsExportBundle:IssueExport:singleIssueJson" }
+  defaults: { _controller: "VipaExportBundle:IssueExport:singleIssueJson" }
 
-ojs_data_export_single_issue_xml:
+vipa_data_export_single_issue_xml:
   path:     /{id}/xml
-  defaults: { _controller: "OjsExportBundle:IssueExport:singleIssueXml" }
+  defaults: { _controller: "VipaExportBundle:IssueExport:singleIssueXml" }
