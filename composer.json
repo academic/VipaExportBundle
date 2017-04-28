@@ -1,6 +1,6 @@
 {
   "name": "vipa/export-bundle",
-  "description": "Data export bundle for OJS",
+  "description": "Data export bundle for VIPA",
   "type": "symfony-bundle",
   "keywords": [
     "export bundle"

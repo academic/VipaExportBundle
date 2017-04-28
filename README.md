@@ -1,2 +1,2 @@
 # VipaExportBundle
-Export Bundle for Open Journal Software (OJS)
+Export Bundle for Open Journal Software (VIPA)
